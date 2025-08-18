@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sukanya Madhavan - Chief Product & Technology Officer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: A single-page application with a top-down narrative flow designed for recruiters. It starts with a Hero section for immediate impression (name, summary), followed by a Dashboard of quantifiable Key Impact Metrics to showcase immediate value. The core is an interactive Career Journey section using a tabbed interface to focus on the most recent, impactful role first, preventing information overload. Within the main role, an interactive timeline details year-by-year achievements, making dense information digestible. This structure prioritizes scannability and impact, guiding the user from high-level achievements to detailed exploration, which is more effective for a resume's purpose than a purely chronological list. -->
+    <!-- Visualization & Content Choices: 
+        - Key Metrics ($198M Revenue, $165B Volume): Goal=Inform -> Presentation=Animated Counter Cards -> Interaction=On-scroll animation -> Justification=Highlights core achievements dynamically, grabbing attention. Method=JS.
+        - Career Roles (CSG, TMX, etc.): Goal=Organize -> Presentation=Tabbed Interface -> Interaction=Click to reveal content -> Justification=Keeps UI clean, focuses user on one role at a time, improves readability. Method=JS.
+        - CSG Forte Roadmap (2019-2024): Goal=Change/Organize -> Presentation=Interactive Horizontal Timeline -> Interaction=Click on year to show details -> Justification=Breaks down a long list of achievements into a manageable, engaging, time-based narrative. Method=JS.
+        - Revenue Growth ($110M to $198M): Goal=Compare -> Presentation=Bar Chart -> Interaction=Hover for tooltips -> Justification=Provides a clear, powerful visual of financial impact over time. Method=Chart.js/Canvas.
+        - All other text is structured in cards and lists for clarity. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f7f4;
+            color: #2c3e50;
+        }
+        .metric-card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+        }
+        .metric-value {
+            color: #4a5568;
+        }
+        .section-title {
+            color: #2c3e50;
+        }
+        .tab {
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+        .tab.active {
+            color: #3b82f6;
+            border-bottom-color: #3b82f6;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .timeline-item {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .timeline-item .timeline-dot {
+            background-color: #d1d5db;
+            transition: all 0.3s ease;
+        }
+        .timeline-item.active .timeline-dot {
+            background-color: #3b82f6;
+            transform: scale(1.25);
+        }
+        .timeline-item.active .timeline-year {
+            color: #3b82f6;
+            font-weight: 700;
+        }
+        .timeline-content {
+            display: none;
+        }
+        .timeline-content.active {
+            display: block;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-7xl">
+
+        <!-- Header Section -->
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800">Sukanya Madhavan</h1>
+            <p class="text-xl md:text-2xl text-blue-600 mt-2">Chief Product & Technology Officer</p>
+            <div class="mt-4 flex justify-center items-center space-x-6 text-gray-500">
+                <span>Dallas, Texas</span>
+                <span>|</span>
+                <span>Sukanya_nair@yahoo.com</span>
+                <span>|</span>
+                <span>972.333.7508</span>
+            </div>
+            <p class="mt-6 max-w-3xl mx-auto text-lg text-gray-600">
+                A highly accomplished product and technology executive passionate about creating innovative cloud-native products to drive double-digit revenue growth and solve complex customer challenges by empowering global teams to deliver award-winning B2B & B2C SaaS products.
+            </p>
+        </header>
+
+        <!-- Key Impact Metrics Section -->
+        <section id="impact" class="mb-16">
+             <h2 class="text-3xl font-bold text-center mb-8 section-title">Key Impact Metrics</h2>
+             <p class="text-center text-gray-600 mb-8 max-w-3xl mx-auto">This section provides a snapshot of the key results and business impact delivered across my leadership roles. These metrics represent significant growth in revenue, platform scale, and customer acquisition.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="metric-card">
+                    <h3 class="text-lg font-semibold text-gray-500">Recurring Revenue</h3>
+                    <p class="text-4xl font-bold mt-2 metric-value" data-target="198">0</p>
+                    <p class="text-gray-400">Million USD</p>
+                </div>
+                <div class="metric-card">
+                    <h3 class="text-lg font-semibold text-gray-500">Processing Volume</h3>
+                    <p class="text-4xl font-bold mt-2 metric-value" data-target="165">0</p>
+                    <p class="text-gray-400">Billion USD</p>
+                </div>
+                <div class="metric-card">
+                    <h3 class="text-lg font-semibold text-gray-500">Payment Transactions</h3>
+                    <p class="text-4xl font-bold mt-2 metric-value" data-target="215">0</p>
+                    <p class="text-gray-400">Million Annually</p>
+                </div>
+                <div class="metric-card">
+                    <h3 class="text-lg font-semibold text-gray-500">Business Customer Base</h3>
+                    <p class="text-4xl font-bold mt-2 metric-value" data-target="130">0</p>
+                    <p class="text-gray-400">Thousand+</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Career Journey Section -->
+        <section id="experience" class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-8 section-title">Career Journey</h2>
+             <p class="text-center text-gray-600 mb-8 max-w-3xl mx-auto">Explore my professional history by selecting a role below. Each tab contains detailed descriptions of my responsibilities and key achievements, with a special focus on the product and technology roadmap at CSG Forte.</p>
+            <div class="bg-white rounded-lg shadow-lg p-4 sm:p-6 lg:p-8">
+                <div class="border-b border-gray-200 mb-6">
+                    <nav class="flex flex-wrap -mb-px" id="tabs">
+                        <a href="#" class="tab active text-lg font-medium py-4 px-6" data-target="cpto-csg">CPTO, CSG Forte</a>
+                        <a href="#" class="tab text-lg font-medium py-4 px-6" data-target="head-forte">Head of Product, Forte</a>
+                        <a href="#" class="tab text-lg font-medium py-4 px-6" data-target="dir-tmx">Director, TMX Finance</a>
+                        <a href="#" class="tab text-lg font-medium py-4 px-6" data-target="mgr-cash">Manager, Cash America</a>
+                    </nav>
+                </div>
+
+                <div id="tab-contents">
+                    <!-- CPTO, CSG Forte -->
+                    <div id="cpto-csg" class="tab-content active">
+                        <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+                            <div class="lg:col-span-3">
+                                <h3 class="text-2xl font-bold text-gray-800">Chief Product & Technology Officer</h3>
+                                <p class="text-md text-gray-500 mb-4">Oct 2018 - Present</p>
+                                <p class="text-gray-700 mb-6">Drove product strategy positioning Forte as a trusted payments platform for over 130K businesses, processing $165B+ in volume. Oversaw a $27M R&D budget, expanded global teams, and led a comprehensive technology modernization vision.</p>
+                                
+                                <h4 class="font-bold text-lg mb-2">Product Vision & Strategy:</h4>
+                                <ul class="list-disc list-inside text-gray-600 mb-4 space-y-1">
+                                    <li>Delivered impactful SaaS products resulting in $198M recurring revenue and double-digit growth.</li>
+                                    <li>Built global teams fostering customer-centric development and an award-winning product suite.</li>
+                                    <li>Launched: Ecommerce (Dex), APIs, new PCI-validated POS, Billpay, embedded lending, Digital Wallets, BNPL, Transactional Risk AI, Chatbots, and more.</li>
+                                </ul>
+
+                                <h4 class="font-bold text-lg mb-2">Technology Leadership:</h4>
+                                <ul class="list-disc list-inside text-gray-600 space-y-1">
+                                    <li>Executed technology modernization to cloud services, including AWS Aurora PostgreSQL.</li>
+                                    <li>Revitalized core ACH engine, orchestrating millions of daily originations across 28+ banks.</li>
+                                    <li>Spearheaded Database modernization achieving 10X growth and scalability.</li>
+                                </ul>
+                            </div>
+                            <div class="lg:col-span-2">
+                                 <h4 class="font-bold text-lg mb-4 text-center lg:text-left">Revenue Growth Under Leadership</h4>
+                                 <div class="chart-container">
+                                     <canvas id="revenueChart"></canvas>
+                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-12">
+                            <h4 class="text-xl font-bold text-center mb-2">Interactive Roadmap of Key Achievements</h4>
+                            <p class="text-center text-gray-500 mb-8">Click on a year to see key initiatives and milestones.</p>
+                            <!-- Interactive Timeline -->
+                            <div class="relative">
+                                <!-- Timeline Line -->
+                                <div class="absolute left-0 top-4 w-full h-0.5 bg-gray-300"></div>
+                                <div class="flex justify-between relative" id="timeline">
+                                    <div class="timeline-item w-1/6 text-center active" data-target="2019">
+                                        <div class="timeline-dot w-4 h-4 rounded-full bg-gray-300 mx-auto"></div>
+                                        <p class="mt-2 timeline-year text-sm md:text-base">2019</p>
+                                    </div>
+                                    <div class="timeline-item w-1/6 text-center" data-target="2020">
+                                        <div class="timeline-dot w-4 h-4 rounded-full bg-gray-300 mx-auto"></div>
+                                        <p class="mt-2 timeline-year text-sm md:text-base">2020</p>
+                                    </div>
+                                    <div class="timeline-item w-1/6 text-center" data-target="2021">
+                                        <div class="timeline-dot w-4 h-4 rounded-full bg-gray-300 mx-auto"></div>
+                                        <p class="mt-2 timeline-year text-sm md:text-base">2021</p>
+                                    </div>
+                                    <div class="timeline-item w-1/6 text-center" data-target="2022">
+                                        <div class="timeline-dot w-4 h-4 rounded-full bg-gray-300 mx-auto"></div>
+                                        <p class="mt-2 timeline-year text-sm md:text-base">2022</p>
+                                    </div>
+                                    <div class="timeline-item w-1/6 text-center" data-target="2023">
+                                        <div class="timeline-dot w-4 h-4 rounded-full bg-gray-300 mx-auto"></div>
+                                        <p class="mt-2 timeline-year text-sm md:text-base">2023</p>
+                                    </div>
+                                     <div class="timeline-item w-1/6 text-center" data-target="2024">
+                                        <div class="timeline-dot w-4 h-4 rounded-full bg-gray-300 mx-auto"></div>
+                                        <p class="mt-2 timeline-year text-sm md:text-base">2024</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="timeline-contents" class="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200 min-h-[150px]">
+                                <div id="2019" class="timeline-content active">
+                                    <ul class="list-disc list-inside text-gray-700"><li>Roadmap primarily driven by GTM requests</li><li>Production for tracking established</li><li>Launch of Product operations team</li><li>First Bangalore, Columbia team member onboarded</li></ul>
+                                </div>
+                                <div id="2020" class="timeline-content">
+                                    <ul class="list-disc list-inside text-gray-700"><li>Formal adoption of scrum/agile process</li><li>Launch of new Agile teams</li><li>Product portal launch</li><li>2021 Roadmap sneak peek published</li><li>Continued team expansion in Bangalore</li><li>Payment Manager team merge into Forte</li></ul>
+                                </div>
+                                <div id="2021" class="timeline-content">
+                                    <ul class="list-disc list-inside text-gray-700"><li>First Brazil team member onboarded</li><li>Continued team expansion globally</li><li>Continued improvements to scrum/agile process</li><li>Monthly product updates with stakeholders</li></ul>
+                                </div>
+                                <div id="2022" class="timeline-content">
+                                    <ul class="list-disc list-inside text-gray-700"><li>Launch of Production support team</li><li>Product feature categorization (CD/CI/PM/PL)</li><li>Move to auditable for better analytics/tracking</li><li>Global team member mix in every agile team</li><li>Sprint inclusion of QA automation</li><li>Insight into delivery metrics</li></ul>
+                                </div>
+                                <div id="2023" class="timeline-content">
+                                    <ul class="list-disc list-inside text-gray-700"><li>Bi-weekly unplanned prioritization meeting with stakeholders</li><li>'Augmenting development' efforts with SOW initiatives</li><li>Continued focus on automation</li><li>Launch of service provider funded sponsored initiatives</li><li>Platform/Tech participation in 2024 roadmap discussion</li><li>24/7 Ops support team</li><li>Bimonthly meetings with leads and managers</li></ul>
+                                </div>
+                                <div id="2024" class="timeline-content">
+                                    <ul class="list-disc list-inside text-gray-700"><li>Launch of Tier2 team to speed up sponsored initiatives and intentional innovation</li><li>Creating a Fraud Risk Engine model with customized business specific fraud detection (ACH)</li><li>Continued platform modernization focus (Data mover and Aurora prework)</li><li>Merger of ICG teams to Forte</li><li>Expanding to 170 team members (Platform, dev, QA, BA, 12 agile teams)</li></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Head of Product, Forte -->
+                    <div id="head-forte" class="tab-content">
+                        <h3 class="text-2xl font-bold text-gray-800">Head of Product Management</h3>
+                        <p class="text-md text-gray-500 mb-4">Sep 2015 - Oct 2018</p>
+                        <ul class="list-disc list-inside text-gray-600 space-y-2">
+                           <li>Reporting to the CEO, introduced new products and expanded the customer base by 50K businesses.</li>
+                           <li>Collaborated with executives to increase annual revenue to over $110M, securing Forte’s acquisition by CSG.</li>
+                           <li>Formalized product management, built teams from the ground up, and implemented processes for quicker SaaS product market entry.</li>
+                           <li>Launched new products including automated merchant onboarding, Payment APIs, Payfac as a service, and POS/EMV capabilities.</li>
+                           <li>Focused on verticals such as Government, Property Management, Insurance, and Telecom.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Director, TMX Finance -->
+                    <div id="dir-tmx" class="tab-content">
+                        <h3 class="text-2xl font-bold text-gray-800">Director of Product Management</h3>
+                        <p class="text-md text-gray-500 mb-4">Nov 2013 - Sep 2015</p>
+                        <ul class="list-disc list-inside text-gray-600 space-y-2">
+                           <li>Led the development of high-transactional B2C auto and title lending systems.</li>
+                           <li>Enhanced customer satisfaction and revenue growth through product management strategies and roadmaps.</li>
+                           <li>Fostered a positive team environment, motivating cross-functional teams (12 scaled agile teams).</li>
+                           <li>Key highlights include system consolidation, legacy system retirement, and business architecture optimization.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Manager, Cash America -->
+                    <div id="mgr-cash" class="tab-content">
+                        <h3 class="text-2xl font-bold text-gray-800">Manager Business Systems</h3>
+                        <p class="text-md text-gray-500 mb-4">Nov 2006 - Oct 2013</p>
+                        <ul class="list-disc list-inside text-gray-600 space-y-2">
+                           <li>Led the digital transformation of a high-volume B2C $50M Point of Sale (POS) system.</li>
+                           <li>Managed structured re-engineering, implementation, and roll-out to over 700 retail locations with minimal customer impact.</li>
+                           <li>Highlights include managing multiple systems through M&A, and integrations for lending, retail, and back-office reconciliation.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Skills & Awards Section -->
+        <section class="mb-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div>
+                    <h2 class="text-3xl font-bold text-center mb-8 section-title">Core Competencies</h2>
+                    <div class="flex flex-wrap justify-center gap-3">
+                        <span class="bg-gray-200 text-gray-800 text-md font-medium px-4 py-2 rounded-full">Product & Technology Vision</span>
+                        <span class="bg-gray-200 text-gray-800 text-md font-medium px-4 py-2 rounded-full">Payments Thought Leadership</span>
+                        <span class="bg-gray-200 text-gray-800 text-md font-medium px-4 py-2 rounded-full">Global Team Building</span>
+                        <span class="bg-gray-200 text-gray-800 text-md font-medium px-4 py-2 rounded-full">Cloud Business Optimization</span>
+                        <span class="bg-gray-200 text-gray-800 text-md font-medium px-4 py-2 rounded-full">M&A / Fintech Partnerships</span>
+                        <span class="bg-gray-200 text-gray-800 text-md font-medium px-4 py-2 rounded-full">Empathetic Leadership</span>
+                        <span class="bg-gray-200 text-gray-800 text-md font-medium px-4 py-2 rounded-full">Collaborative Problem Solving</span>
+                    </div>
+                </div>
+                <div>
+                    <h2 class="text-3xl font-bold text-center mb-8 section-title">Awards & Recognition</h2>
+                    <div class="space-y-4">
+                        <div class="bg-white p-4 rounded-lg shadow-md flex items-center">
+                            <span class="text-2xl mr-4">🏆</span>
+                            <div>
+                                <p class="font-semibold">CATEALYZE Leadership</p>
+                                <p class="text-sm text-gray-500">2024</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow-md flex items-center">
+                           <span class="text-2xl mr-4">🏆</span>
+                           <div>
+                                <p class="font-semibold">CIO Today, Most Empowering Women to Follow</p>
+                                <p class="text-sm text-gray-500">2024</p>
+                           </div>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow-md flex items-center">
+                           <span class="text-2xl mr-4">🏆</span>
+                           <div>
+                                <p class="font-semibold">Outstanding Leadership Award</p>
+                                <p class="text-sm text-gray-500">2023</p>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education & Volunteering -->
+        <section>
+             <h2 class="text-3xl font-bold text-center mb-8 section-title">Education & Volunteering</h2>
+             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-center">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                     <h3 class="text-xl font-bold mb-2">Education</h3>
+                     <p><strong>Executive Leadership</strong> - Cornell University, 2020</p>
+                     <p><strong>MBA</strong> - Washington State University, 2015</p>
+                     <p><strong>Bachelor's in Electrical Engineering</strong> - Bharathiyar University, 2000</p>
+                 </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                     <h3 class="text-xl font-bold mb-2">Volunteer Experience</h3>
+                     <p><strong>Yoga Instructor</strong> (2020 - Present)</p>
+                     <p><strong>Promote Girl’s Education</strong> - My Princess Foundation, 2020</p>
+                 </div>
+             </div>
+        </section>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animated Counters
+            const counters = document.querySelectorAll('.metric-value');
+            const speed = 200; 
+
+            const animateCounters = () => {
+                counters.forEach(counter => {
+                    const updateCount = () => {
+                        const target = +counter.getAttribute('data-target');
+                        const count = +counter.innerText;
+                        const inc = Math.ceil(target / speed);
+
+                        if (count < target) {
+                            counter.innerText = Math.min(count + inc, target);
+                            setTimeout(updateCount, 10);
+                        } else {
+                            counter.innerText = target;
+                        }
+                    };
+                    updateCount();
+                });
+            };
+            
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateCounters();
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            document.querySelectorAll('.metric-card').forEach(card => {
+                observer.observe(card);
+            });
+
+            // Tabs for Career Journey
+            const tabs = document.getElementById('tabs');
+            const tabContents = document.getElementById('tab-contents');
+
+            tabs.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (e.target.classList.contains('tab')) {
+                    // Deactivate existing active tab and content
+                    tabs.querySelector('.active').classList.remove('active');
+                    tabContents.querySelector('.active').classList.remove('active');
+                    
+                    // Activate new tab and content
+                    e.target.classList.add('active');
+                    const targetId = e.target.getAttribute('data-target');
+                    document.getElementById(targetId).classList.add('active');
+                }
+            });
+
+            // Interactive Timeline
+            const timeline = document.getElementById('timeline');
+            const timelineContents = document.getElementById('timeline-contents');
+
+            timeline.addEventListener('click', function(e) {
+                const targetItem = e.target.closest('.timeline-item');
+                if (targetItem) {
+                    // Deactivate existing active item and content
+                    timeline.querySelector('.active').classList.remove('active');
+                    timelineContents.querySelector('.active').classList.remove('active');
+                    
+                    // Activate new item and content
+                    targetItem.classList.add('active');
+                    const targetId = targetItem.getAttribute('data-target');
+                    document.getElementById(targetId).classList.add('active');
+                }
+            });
+
+            // Revenue Growth Chart
+            const ctx = document.getElementById('revenueChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Head of Product Role End', 'Current CPTO Role'],
+                    datasets: [{
+                        label: 'Annual Revenue (in Millions)',
+                        data: [110, 198],
+                        backgroundColor: [
+                            'rgba(59, 130, 246, 0.6)',
+                            'rgba(29, 78, 216, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(59, 130, 246, 1)',
+                            'rgba(29, 78, 216, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + value + 'M';
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                             callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.parsed.y) + 'M';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
