@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sukanya Madhavan - Chief Product & Technology Officer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: A single-page application with a top-down narrative flow designed for recruiters. It starts with a Hero section for immediate impression (name, summary), followed by a Dashboard of quantifiable Key Impact Metrics to showcase immediate value. The core is an interactive Career Journey section using a tabbed interface to focus on the most recent, impactful role first, preventing information overload. Within the main role, an interactive timeline details year-by-year achievements, making dense information digestible. This structure prioritizes scannability and impact, guiding the user from high-level achievements to detailed exploration, which is more effective for a resume's purpose than a purely chronological list. -->
+    <!-- Visualization & Content Choices: 
+        - Key Metrics ($198M Revenue, $165B Volume): Goal=Inform -> Presentation=Animated Counter Cards -> Interaction=On-scroll animation -> Justification=Highlights core achievements dynamically, grabbing attention. Method=JS.
+        - Career Roles (CSG, TMX, etc.): Goal=Organize -> Presentation=Tabbed Interface -> Interaction=Click to reveal content -> Justification=Keeps UI clean, focuses user on one role at a time, improves readability. Method=JS.
+        - CSG Forte Roadmap (2019-2024): Goal=Change/Organize -> Presentation=Interactive Horizontal Timeline -> Interaction=Click on year to show details -> Justification=Breaks down a long list of achievements into a manageable, engaging, time-based narrative. Method=JS.
+        - Revenue Growth ($110M to $198M): Goal=Compare -> Presentation=Bar Chart -> Interaction=Hover for tooltips -> Justification=Provides a clear, powerful visual of financial impact over time. Method=Chart.js/Canvas.
+        - All other text is structured in cards and lists for clarity. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f7f4;
+            color: #2c3e50;
+        }
+        .metric-card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+        }
+        .metric-value {
+            color: #4a5568;
+        }
+        .section-title {
+            color: #2c3e50;
+        }
+        .tab {
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+        .tab.active {
+            color: #3b82f6;
+            border-bottom-color: #3b82f6;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .timeline-item {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .timeline-item .timeline-dot {
+            background-color: #d1d5db;
+            transition: all 0.3s ease;
+        }
+        .timeline-item.active .timeline-dot {
+            background-color: #3b82f6;
+            transform: scale(1.25);
+        }
+        .timeline-item.active .timeline-year {
+            color: #3b82f6;
+            font-weight: 700;
+        }
+        .timeline-content {
+            display: none;
+        }
+        .timeline-content.active {
+            display: block;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-7xl">
+
+        <!-- Header Section -->
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800">Sukanya Madhavan</h1>
+            <p class="text-xl md:text-2xl text-blue-600 mt-2">Chief Product & Technology Officer</p>
+            <div class="mt-4 flex justify-center items-center space-x-6 text-gray-500">
+                
+                <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="small" data-theme="light" data-type="VERTICAL" data-vanity="sukanya-madhavan-3222a06" data-version="v1"><a class="badge-base__link LI-simple-link" href="https://www.linkedin.com/in/sukanya-madhavan-3222a06?trk=profile-badge"></a></div>
+            </div>
+            <p class="mt-6 max-w-3xl mx-auto text-lg text-gray-600">
+                Visionary Payments and Fintech Executive
+Sukanya Madhavan is a highly influential Payments and Fintech executive celebrated for her success in building and scaling award-winning, cloud-native products and solutions. With nearly 25 years of experience in the financial services industry, she is focused on delivering innovative payment platforms that enable businesses—from government, retail, and property management to insurance—to grow and serve their customers efficiently.
+
+Sukanya currently leads global product development and platform teams, driving the strategic vision and execution of modern, customer-oriented solutions. Her passion lies in providing world-class, global payment solutions that are designed to scale alongside business growth, leveraging cutting-edge technologies like AI and modern payments innovation. She has a proven track record of fostering enthusiastic, high-performing teams across the globe, including the United States, Colombia, Brazil, and India.
+
+Key Areas of Leadership & Focus
+Sukanya's expertise centers on connecting strategic vision with technological execution:
+
+Organizational Strategy and Leadership
+
+Technology Vision and Strategy for cloud-native platforms
+
+Global Team Building and fostering high-performance cultures
+
+AI and Modern Payments Innovation
+
+Product Management and delivering superior customer-oriented solutions
+
+Achievements and Industry Recognition
+Sukanya's leadership and the innovative products she oversees have garnered significant industry recognition:
+
+Personal Achievements
+Most Empowering Women to Follow 2024 / CIO Today
+
+Global Icons for Leadership 2023
+
+MoRE 2.0 Conference Outstanding Leadership Award
+
+Gartner Product Management - Peer Ambassador
+
+Team & Innovation Recognitions (CSG Forte)
+Forrester Wave Inclusion (2024)
+
+The Strawhacker Group 2023 Award for Best of Breed API Set
+
+2022 Card Not Present Best E-Commerce Platform/Gateway and Best Processor awards
+
+The Strawhacker Group 2022 Award for Best Performing Gateway
+
+Educational Background
+Sukanya is a dedicated lifelong learner with a robust technical and business foundation:
+
+Executive Leadership Certificate from Cornell University
+
+Master of Business Administration (MBA) from Washington State University
+
+Bachelor of Science in Electrical Engineering from Washington State University
+
+Bachelor’s in Electrical Engineering from Bharathiyar University
+
+
+            </p>
+        </header>
+
+        
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animated Counters
+            const counters = document.querySelectorAll('.metric-value');
+            const speed = 200; 
+
+            const animateCounters = () => {
+                counters.forEach(counter => {
+                    const updateCount = () => {
+                        const target = +counter.getAttribute('data-target');
+                        const count = +counter.innerText;
+                        const inc = Math.ceil(target / speed);
+
+                        if (count < target) {
+                            counter.innerText = Math.min(count + inc, target);
+                            setTimeout(updateCount, 10);
+                        } else {
+                            counter.innerText = target;
+                        }
+                    };
+                    updateCount();
+                });
+            };
+            
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateCounters();
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            document.querySelectorAll('.metric-card').forEach(card => {
+                observer.observe(card);
+            });
+
+            // Tabs for Career Journey
+            const tabs = document.getElementById('tabs');
+            const tabContents = document.getElementById('tab-contents');
+
+            tabs.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (e.target.classList.contains('tab')) {
+                    // Deactivate existing active tab and content
+                    tabs.querySelector('.active').classList.remove('active');
+                    tabContents.querySelector('.active').classList.remove('active');
+                    
+                    // Activate new tab and content
+                    e.target.classList.add('active');
+                    const targetId = e.target.getAttribute('data-target');
+                    document.getElementById(targetId).classList.add('active');
+                }
+            });
+
+            // Interactive Timeline
+            const timeline = document.getElementById('timeline');
+            const timelineContents = document.getElementById('timeline-contents');
+
+            timeline.addEventListener('click', function(e) {
+                const targetItem = e.target.closest('.timeline-item');
+                if (targetItem) {
+                    // Deactivate existing active item and content
+                    timeline.querySelector('.active').classList.remove('active');
+                    timelineContents.querySelector('.active').classList.remove('active');
+                    
+                    // Activate new item and content
+                    targetItem.classList.add('active');
+                    const targetId = targetItem.getAttribute('data-target');
+                    document.getElementById(targetId).classList.add('active');
+                }
+            });
+
+            // Revenue Growth Chart
+            const ctx = document.getElementById('revenueChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Head of Product Role End', 'Current CPTO Role'],
+                    datasets: [{
+                        label: 'Annual Revenue (in Millions)',
+                        data: [110, 198],
+                        backgroundColor: [
+                            'rgba(59, 130, 246, 0.6)',
+                            'rgba(29, 78, 216, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(59, 130, 246, 1)',
+                            'rgba(29, 78, 216, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + value + 'M';
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                             callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.parsed.y) + 'M';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
